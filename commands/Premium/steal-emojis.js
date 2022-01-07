@@ -13,13 +13,22 @@ module.exports = new Command({
     for (const rawEmoji of args) {
       const parsedEmoji = Util.parseEmoji(rawEmoji)
 
-      if (parsedEmoji.id) {
-        const extension = parsedEmoji.animated ? ".gif" : ".png"
-        const url = `https://cdn.discordapp.com/emojis/${parsedEmoji.id + extension}`
+      if (parsedEmoji.id && !parsedEmoji.animated) {
+        const url = `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.png`
         message.guild.emojis.create(url, parsedEmoji.name).then((emoji) => {
           const AddedEmojiEmbed = new MessageEmbed()
             .setTitle("EMOJI ADDED")
             .setDescription(`<:${emoji.name}:${emoji.id}> **${emoji.name}** has been added to the server.`)
+            .setFooter({ text: `Added By: ${message.author.id}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+            .setColor("GREEN")
+          message.channel.send({ embeds: [AddedEmojiEmbed] })
+        })
+      } else if (parsedEmoji.id && parsedEmoji.animated) {
+        const url = `https://cdn.discordapp.com/emojis/${parsedEmoji.id}.gif`
+        message.guild.emojis.create(url, parsedEmoji.name).then((emoji) => {
+          const AddedEmojiEmbed = new MessageEmbed()
+            .setTitle("EMOJI ADDED")
+            .setDescription(`<a:${emoji.name}:${emoji.id}> **${emoji.name}** has been added to the server.`)
             .setFooter({ text: `Added By: ${message.author.id}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
             .setColor("GREEN")
           message.channel.send({ embeds: [AddedEmojiEmbed] })
