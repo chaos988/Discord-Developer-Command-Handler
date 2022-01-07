@@ -131,7 +131,7 @@ client.on("messageCreate", async (message) => {
 
               if (
                 command.devOnly == true &&
-                message.author.id !== "725217637923029033"
+                message.author.id !== "yourID"
               ) {
                 const DevOnly = new MessageEmbed()
                   .setTitle("<:off1:926841605397299230> An Error Occured")
