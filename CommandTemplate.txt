@@ -1,0 +1,10 @@
+const Command = require("../../Structures/Command");
+
+module.exports = new Command({
+  name: "", //Command Name
+  description: "", // Command Description
+  category: "", // Command Category
+  userPermissions: [""], // User Permission Checking
+  botPermissions: [""], // Bot Permission Checking
+  run: async (client, message, args) => {},
+});
